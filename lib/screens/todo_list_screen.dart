@@ -25,17 +25,16 @@ class _TodoListScreenState extends State<TodoListScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final newTaskTitle = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AddTaskScreen()),
-          ).then((newTaskTitle) {
-            if (newTaskTitle != null) {
-              setState(() {
-                tasks.add(Task(name: newTaskTitle));
-              });
-            }
-          });
+          );
+          if (newTaskTitle != null) {
+            setState(() {
+              tasks.add(Task(name: newTaskTitle));
+            });
+          }
         },
         tooltip: 'Agregar Tarea',
         child: Icon(Icons.add),
@@ -43,3 +42,4 @@ class _TodoListScreenState extends State<TodoListScreen> {
     );
   }
 }
+
