@@ -21,7 +21,19 @@ class _TodoListScreenState extends State<TodoListScreen> {
         itemCount: tasks.length,
         itemBuilder: (context, index) {
           final task = tasks[index];
-          return TaskTile(task: task);
+          return TaskTile(
+            task: task,
+            onChanged: (value) {
+              setState(() {
+                task.toggleDone();
+              });
+            },
+            onDelete: () {
+              setState(() {
+                tasks.remove(task);
+              });
+            },
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
