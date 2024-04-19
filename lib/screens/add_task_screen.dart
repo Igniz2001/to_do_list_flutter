@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddTaskScreen extends StatefulWidget {
   @override
@@ -28,8 +29,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             ),
             SizedBox(height: 8.0),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context, newTaskTitle);
+              onPressed: () async {
+                if (newTaskTitle.isNotEmpty) {
+                  await addTaskToFirestore(newTaskTitle);
+                  Navigator.pop(context);
+                }
               },
               child: Text('Aceptar'),
             ),
@@ -38,4 +42,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       ),
     );
   }
+
+  Future<void> addTaskToFirestore(String taskName) async {
+    await FirebaseFirestore.instance.collection('tasks').add({
+      'name': taskName,
+      'createdAt': Timestamp.now(),
+      // Otros campos relevantes de la tarea
+    });
+  }
 }
+
