@@ -38,12 +38,13 @@ class _TodoListScreenState extends State<TodoListScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() async {
-            final newTaskTitle = await Navigator.push(
+        onPressed: () async {
+          final newTaskTitle = await Navigator.push(
              context,
              MaterialPageRoute(builder: (context) => AddTaskScreen()),
            );
+          setState((){
+            
             taskController
                 .create({"title": newTaskTitle})
                 .then((id) => print(id))

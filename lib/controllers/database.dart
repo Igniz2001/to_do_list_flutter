@@ -15,8 +15,5 @@ class TaskController {
     return response.id;
   }
 
-  TaskController() {
-    
-  }
-  
+  TaskController(); 
 }
