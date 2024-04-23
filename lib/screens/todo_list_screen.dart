@@ -40,19 +40,21 @@ class _TodoListScreenState extends State<TodoListScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final newTaskTitle = await Navigator.push(
-             context,
-             MaterialPageRoute(builder: (context) => AddTaskScreen()),
-           );
-          setState((){
-            
-            taskController
-                .create({"title": newTaskTitle})
-                .then((id) => print(id))
-                .catchError((e) => print(e));
+            context,
+            MaterialPageRoute(builder: (context) => AddTaskScreen()),
+          );
+          if (newTaskTitle != null) {
+            setState(() {
+              taskController.create({"title": newTaskTitle}).then((id) {
+                print(id);
+                tasks.add(Task(
+                    name: newTaskTitle)); // Agregar la nueva tarea a la lista
+              }).catchError((e) => print(e));
 
-            //taskController.addTask(listaTareas, task);
-            Navigator.pop(context);
-        });},
+              //taskController.addTask(listaTareas, task);
+            });
+          }
+        },
         // onPressed: () async {
         //   final newTaskTitle = await Navigator.push(
         //     context,
@@ -70,4 +72,3 @@ class _TodoListScreenState extends State<TodoListScreen> {
     );
   }
 }
-
